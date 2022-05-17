@@ -1,0 +1,500 @@
+---
+title: "What are the effects of indirect facilitation on the dynamic of a dryland ecosystem?"
+subtitle: "Research associate application"
+author: 
+  - "**Alain Danet**, Florian D. Schneider, Fabien Anthelme, Sonia Kéfi"
+  - "Illinois State University"
+  - "[https://alaindanet.github.io](https://alaindanet.github.io)"
+date: "Slides created via the R package [xaringan](https://github.com/yihui/xaringan)"
+output:
+  xaringan::moon_reader:
+    self_contained: true
+    css: [default, metropolis, metropolis-fonts, "custom.css", "fira_code.css"]
+    nature:
+      ratio: "16:9"
+---
+
+<div style = "position:fixed; visibility: hidden">
+$$\require{color}\definecolor{red}{rgb}{1, 0, 0}$$
+$$\require{color}\definecolor{green}{rgb}{0, 1, 0}$$
+$$\require{color}\definecolor{blue}{rgb}{0, 0, 1}$$
+</div>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+    Macros: {
+      red: ["{\\color{red}{#1}}", 1],
+      green: ["{\\color{green}{#1}}", 1],
+      blue: ["{\\color{blue}{#1}}", 1]
+    },
+    loader: {load: ['[tex]/color']},
+    tex: {packages: {'[+]': ['color']}}
+  }
+});
+</script>
+
+<style>
+.red {color: #FF0000;}
+.green {color: #00FF00;}
+.blue {color: #0000FF;}
+</style>
+
+
+```{r flair_color, echo=FALSE}
+library(flair)
+red <- "#FF0000"
+green <- "#00FF00"
+blue <- "#0000FF"
+```
+
+```{r packages, include=FALSE, warning=FALSE}
+library(tidyverse)
+library(magrittr)
+library(cowplot)
+library(DiagrammeR)
+```
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, htmltools.preserve.raw = FALSE)
+knitr::opts_chunk$set(
+  fig.asp = .6, fig.retina = 3,
+  out.width = "70%",
+  fig.align = "center",
+  dev.args = list(bg = "transparent"),
+  cache = FALSE,
+  echo = FALSE,
+  include = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  hiline = TRUE
+)
+
+mytheme <- theme_half_open() +
+  theme(
+    axis.title.y = element_blank(),
+    rect = element_rect(fill = "transparent"),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+#library(xaringancolor)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+#setup_colors(
+#  red = "red",
+#  green = "green",
+#  blue = "blue"
+#)
+```
+
+```{r bib-options, include=FALSE, warning=FALSE}
+library(RefManageR)
+library(bibtex)
+bib <- ReadBib("~/Documents/post-these/references.bib", check = FALSE)
+
+BibOptions(
+  check.entries = FALSE,
+  bib.style = "authoryear",
+  first.inits = TRUE,
+  bibpunct = c("(", ")", "[", "]", ";", ","),
+  max.names = 1,
+  style = "markdown",
+  dashed = TRUE)
+```
+
+# Dryland ecosystems
+
+
+41% of Earth land surface, 2bn of people 
+
+```{r}
+knitr::include_graphics("fig_ymca/dryland_map.jpg")
+```
+
+.footnote[[UNEP-WCMC](https://www.fao.org/dryland-assessment/en/)]
+
+```{r}
+out <- vector("character", length = 6)
+for (p in seq(1, 6)) {
+  out[p] <- paste0("\n\n---\n# Catastrophic shifts\n```{r, message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/catastrophic_shift", p ,".png')\n```\n.footnote[`r Citep(bib, 'kefi_local_2007')]")
+}
+```
+
+<!--- knit those table chunk statements --> 
+`r paste(knitr::knit(text = out), collapse = '\n')`
+
+---
+# Direct facilitation
+
+.pull-left[
+
+```{r dir-fac}
+knitr::include_graphics("fig_ymca/goodpatch-badpatch.jpg")
+```
+## Improving local conditions 
+- Increasing resources 
+- Limiting erosion
+- Limiting evapotranspiration
+
+]
+
+.pull-right[
+
+## Positive feedback loop
+
+```{r pos-fb}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 18, fontname = FiraSans]
+
+  node [shape = circle, fixedsize = true, width = 0.9]
+  Vegetation;Water
+
+  edge [penwidth=2, headport='nw', tailport='sw', label='+']
+  Vegetation -> Water
+  edge [penwidth=2, headport='se', tailport='ne', label='+']
+  Water -> Vegetation
+}
+")
+```
+]
+
+---
+class: center
+# Overgrazing
+
+```{r overgrazing, out.width="50%"}
+knitr::include_graphics("fig_ymca/brittannica.com.jpg")
+```
+
+.footnote[[IPCC](https://www.ipcc.ch/srccl/chapter/chapter-3/), [brittannica.com](http://media-3.web.britannica.com/eb-media/55/20155-004-C8550C5E.jpg)]
+
+???
+Bisigato and Laphitz (2009) identified overgrazing as a cause of desertification
+in the Patagonian Monte region of Argentina
+
+Recent human-induced turning points in ecosystem functioning were uncovered around Volgograd (Russia) and around Lake Balkhash (Kazakhstan), attributed to recultivation, increased salinisation, and increased grazing.
+
+Successful grass establishment has been impeded by overgrazing and nutrient depletion leading to the encroachment of shrubs into the northern Chihuahuan Desert (USA) since the mid-19th century (Kidron and Gutschick 2017
+).
+
+
+```{r indir-fac}
+out <- vector("character", length = 4)
+for (p in seq(1, 4)) {
+  out[p] <- paste0("\n\n---\nclass: center\n# Indirect facilitation\n```{r indir-fac",p,", message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/indirect_facilitation", p ,".png')\n```\n")
+}
+```
+
+<!--- knit those table chunk statements --> 
+`r paste(knitr::knit(text = out), collapse = '\n')`
+
+---
+class: center middle
+# Two different stress and two types of facilitation
+
+What is the effect of indirect facilitation through grazing on the dynamic of a
+dryland ecosystem?
+
+--
+
+Coexistence, Stability, Cooccurrence
+
+---
+class: center
+# Transposing a dryland ecosystem to a cellular automata
+
+
+.pull-left[
+```{r cyprus}
+knitr::include_graphics("fig_ymca/cyprus.jpg")
+```
+]
+
+
+.pull-right[
+```{r random-landscape}
+knitr::include_graphics("fig_ymca/random_landscape-eps-converted-to.png")
+```
+]
+
+
+---
+background-image: url("fig_ymca/stand_alone.png")
+background-position: center
+background-size: contain
+# Cells 
+
+```{r, eval=FALSE}
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = false, fontsize = 12, rankdir=RL, nodesep = .6]
+  node [shape = box, fixedsize = true, width = 1]
+  Degraded;Empty;Nurse;Protegee
+
+  edge [penwidth=2, headport='e', tailport='n', label='Colonization']
+  Empty -> Nurse
+  edge [penwidth=2, headport='nw', tailport='s', label='Mortality']
+  Nurse -> Empty
+  edge [penwidth=2, headport='e', tailport='s', label='Colonization']
+  Empty -> Protegee
+  edge [penwidth=2, headport='w', tailport='n', label='Mortality']
+  Protegee -> Empty
+  edge [penwidth=2, headport='sw', tailport='se', label='Degradation']
+  Empty -> Degraded
+  edge [penwidth=2, headport='ne', tailport='nw', label='Regeneration']
+  Degraded -> Empty
+}", engine = "circo")
+```
+
+---
+# Transition equations 
+
+- Mortality:
+
+$$
+\begin{aligned}
+w_{n,o} =& m \\
+w_{p,o} =& m 
+\end{aligned}
+$$
+
+--
+
+- Degradation: 
+$$
+\begin{aligned}
+w_{o,-} =& d 
+\end{aligned}
+$$
+
+--
+
+- Regeneration: 
+$$
+\begin{aligned}
+w_{-,o} =& r + f q_{+|-}
+\end{aligned}
+$$
+
+--
+
+$q_{i|j}$:  proportion of i cells around j cells (local neighborhood)
+
+```{r}
+eq_highlight <- vector("list", length = 6)
+eq_highlight[[1]] <- c(
+  nurse = "w_{o,n}=& (\\red{\\delta\\rho_{n}} + (1-\\delta)q_{n|o}) (b - c\\rho_+ - \\gamma)",
+  protegee = "w_{o,p}=& (\\red{\\delta\\rho_{p}} + (1-\\delta)q_{p|o}) (b - c\\rho_+ - g(1 - p))",
+  mecanisms = ".red[Global dispersal]"
+)
+eq_highlight[[2]] <- c(
+  nurse = "w_{o,n}=& (\\delta\\rho_{n} + \\red{(1-\\delta)q_{n|o}}) (b - c\\rho_+ - \\gamma)",
+  protegee = "w_{o,p}=& (\\delta\\rho_{p} + \\red{(1-\\delta)q_{p|o}}) (b - c\\rho_+ - g(1 - p))",
+  mecanisms = ".red[Local dispersal]"
+)
+eq_highlight[[3]] <- c(
+  nurse = "w_{o,n}=& (\\delta\\rho_{n} + (1-\\delta)q_{n|o}) (\\red{b} - c\\rho_+ - \\gamma)",
+  protegee = "w_{o,p}=& (\\delta\\rho_{p} + (1-\\delta)q_{p|o}) (\\red{b} - c\\rho_+ - g(1 - p))",
+  mecanisms = ".red[Maximum survival and germination]"
+)
+eq_highlight[[4]] <- c(
+  nurse = "w_{o,n}=& (\\delta\\rho_{n} + (1-\\delta)q_{n|o}) (b - \\red{c\\rho_+} - \\gamma)",
+  protegee = "w_{o,p}=& (\\delta\\rho_{p} + (1-\\delta)q_{p|o}) (b - \\red{c\\rho_+} - g(1 - p))",
+  mecanisms = ".red[Global competition for resources]"
+)
+eq_highlight[[5]] <- c(
+  nurse = "w_{o,n}=& (\\delta\\rho_{n} + (1-\\delta)q_{n|o}) (b - c\\rho_+ - \\red{\\gamma})",
+  protegee = "w_{o,p}=& (\\delta\\rho_{p} + (1-\\delta)q_{p|o}) (b - c\\rho_+ - g(1 - p))",
+  mecanisms = ".red[Cost of defense against grazing]"
+)
+eq_highlight[[6]] <- c(
+  nurse = "w_{o,n}=& (\\delta\\rho_{n} + (1-\\delta)q_{n|o}) (b - c\\rho_+ - \\gamma)",
+  protegee = "w_{o,p}=& (\\delta\\rho_{p} + (1-\\delta)q_{p|o}) (b - c\\rho_+ - \\red{g(1 - p)})",
+  mecanisms = ".red[Grazing and indirect facilitation]"
+)
+```
+
+```{r}
+col_eq <- vector("character", length = 6)
+for (p in seq(1, 6)) {
+  col_eq[p] <- paste0(
+    "\n\n---\n
+    # Colonization equations\n
+    - Nurse colonization:\n",
+    "$$\\begin{aligned}", eq_highlight[[p]]["nurse"], "\\end{aligned}$$\n",
+    "- Protegee colonization:\n
+    $$\\begin{aligned}", eq_highlight[[p]]["protegee"], "\\end{aligned}$$\n",
+    "Mecanism: ",
+    eq_highlight[[p]]["mecanisms"]
+    , "\n")
+}
+```
+
+<!--- knit those table chunk statements --> 
+`r paste(knitr::knit(text = str_replace_all(col_eq, "    ", "")), collapse = '\n')`
+
+
+```{r pair-approx}
+out <- vector("character", length = 2)
+for (p in seq(1, 2)) {
+  out[p] <- paste0("\n\n---\nclass: center\n# Pair approximation\n```{r pair-approx",p,", message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/pair-approx", p ,".png')\n```\n")
+}
+```
+
+<!--- knit those table chunk statements --> 
+`r paste(knitr::knit(text = out), collapse = '\n')`
+
+---
+class: center middle
+# Question
+
+How does indirect facilitation affect coexistence between two species in
+competition?
+
+---
+# Coexistence 
+
+Indirect facilitation allows coexistence between two species in competition
+
+.pull-left[
+```{r, out.width="90%"}
+knitr::include_graphics("fig_ymca/stability_u0.png")
+```
+]
+
+--
+
+.pull-right[
+```{r, out.width="90%"}
+knitr::include_graphics("fig_ymca/stability_u5.png")
+```
+]
+
+---
+# Interpretation
+
+.pull-left[
+
+## Classic apparent competition
+
+Herbivore maintains coexistence 
+
+```{r, out.width="80%"}
+knitr::include_graphics("fig_ymca/plant_plant_herbivore.png")
+```
+
+]
+
+.pull-right[
+
+## Indirect facilitation
+
+Nurse maintains coexistence
+
+```{r, out.width="80%"}
+knitr::include_graphics("fig_ymca/nurse_protegee_herbivore.png")
+```
+
+]
+
+---
+class: center middle
+# Question
+
+
+How does indirect facilitation affect stability along the aridity gradient?
+
+---
+class: center middle
+# Stability
+
+
+.pull-left[
+
+## Without indirect facilitation 
+
+```{r, out.width="100%"}
+knitr::include_graphics("fig_ymca/bifurc_g=0.1_u=5.png")
+```
+]
+
+--
+
+.pull-right[
+
+## With indirect facilitation
+
+```{r, out.width="100%"}
+knitr::include_graphics("fig_ymca/bifurc_g=0.25_u=5.png")
+```
+]
+
+---
+class: center middle
+# Question
+
+How does indirect facilitation affect cooccurrence between the nurse and the
+protegee?
+
+---
+class: center
+# Cooccurrence 
+
+.pull-left[
+
+## Clustering nurse protegee 
+```{r, out.width="90%"}
+knitr::include_graphics("fig_ymca/clustering_u0_u10.png")
+```
+]
+
+--
+
+.pull-right[
+## Nb of protegee | nurse
+```{r, out.width="100%"}
+knitr::include_graphics("fig_ymca/protegee_number_u0_u10.png")
+```
+]
+
+---
+class: center
+# Take home message
+
+## Indirect facilitation ... 
+
+allows coexistence between two species in competition
+
+--
+
+modifies the transition of the protegee along the aridity gradient: from
+catastrophic to continuous & hysteresis (less predictable)
+
+--
+
+does not necessarily affect species cooccurrence 
+
+.footnote[`r Citep(bib, "danet_indirect_2020")`]
+---
+background-image: url("fig_ymca/merci.png")
+background-position: center
+background-size: contain
+# Thanks
+
+---
+# Appendices
+
+
