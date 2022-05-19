@@ -115,16 +115,16 @@ BibOptions(
 
 41% of Earth land surface, 2bn of people 
 
-```{r}
+```{r dryland-map}
 knitr::include_graphics("fig_ymca/dryland_map.jpg")
 ```
 
-.footnote[[UNEP-WCMC](https://www.fao.org/dryland-assessment/en/)]
+.footnote[[UNEP-WCMC](https://www.fao.org/dryland-assessment/en/), [IPCC report](https://www.ipcc.ch/srccl/chapter/chapter-3/)]
 
 ```{r}
-out <- vector("character", length = 6)
-for (p in seq(1, 6)) {
-  out[p] <- paste0("\n\n---\n# Catastrophic shifts\n```{r, message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/catastrophic_shift", p ,".png')\n```\n.footnote[`r Citep(bib, 'kefi_local_2007')]")
+out <- vector("character", length = 4)
+for (p in seq(1, 4)) {
+  out[p] <- paste0("\n\n---\n# Catastrophic shifts\n```{r shift",p,", message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/catastrophic_shift", p ,".png')\n```\n.footnote[`r Citet(bib, c('kefi_local_2007', 'scheffer_catastrophic_2001', 'rietkerk_self-organized_2004'))`]")
 }
 ```
 
@@ -133,6 +133,9 @@ for (p in seq(1, 6)) {
 
 ---
 # Direct facilitation
+
+
+.footnote[`r Citet(bib, c("callaway_positive_2007", "kefi_local_2007"))`]
 
 .pull-left[
 
@@ -188,23 +191,36 @@ Recent human-induced turning points in ecosystem functioning were uncovered arou
 Successful grass establishment has been impeded by overgrazing and nutrient depletion leading to the encroachment of shrubs into the northern Chihuahuan Desert (USA) since the mid-19th century (Kidron and Gutschick 2017
 ).
 
+---
+# Indirect facilitation
 
-```{r indir-fac}
-out <- vector("character", length = 4)
-for (p in seq(1, 4)) {
-  out[p] <- paste0("\n\n---\nclass: center\n# Indirect facilitation\n```{r indir-fac",p,", message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/indirect_facilitation", p ,".png')\n```\n")
-}
+.footnote[Credit photo Fabien Anthelme, `r Citet(bib, "callaway_positive_2007")`]
+
+.pull-left[
+```{r quercus}
+knitr::include_graphics("fig_ymca/indirect_facilitation4.png")
 ```
+]
 
-<!--- knit those table chunk statements --> 
-`r paste(knitr::knit(text = out), collapse = '\n')`
+--
+
+.pull-right[
+```{r indir-fac4}
+knitr::include_graphics("fig_ymca/quercus_buxus.png")
+```
+]
+
 
 ---
-class: center middle
-# Two different stress and two types of facilitation
+class: middle
+# Research question 
 
-What is the effect of indirect facilitation through grazing on the dynamic of a
-dryland ecosystem?
+.footnote[`r Citet(bib, "verwijmeren_interspecific_2013")`]
+
+## Two different stress and two types of facilitation
+
+**What is the effect of indirect facilitation through grazing on the dynamic of a
+dryland ecosystem?**
 
 --
 
@@ -212,8 +228,9 @@ Coexistence, Stability, Cooccurrence
 
 ---
 class: center
-# Transposing a dryland ecosystem to a cellular automata
+# Cellular automata
 
+.footnote[`r Citet(bib, "kefi_local_2007")`]
 
 .pull-left[
 ```{r cyprus}
@@ -348,8 +365,8 @@ for (p in seq(1, 6)) {
 
 
 ```{r pair-approx}
-out <- vector("character", length = 2)
-for (p in seq(1, 2)) {
+out <- vector("character", length = 1)
+for (p in 2) {
   out[p] <- paste0("\n\n---\nclass: center\n# Pair approximation\n```{r pair-approx",p,", message=FALSE, warning=FALSE, results='asis'}\nknitr::include_graphics('fig_ymca/pair-approx", p ,".png')\n```\n")
 }
 ```
@@ -369,22 +386,14 @@ competition?
 
 Indirect facilitation allows coexistence between two species in competition
 
-.pull-left[
-```{r, out.width="90%"}
-knitr::include_graphics("fig_ymca/stability_u0.png")
+```{r, out.width="60%"}
+knitr::include_graphics("fig_ymca/danet2020fig2.png")
 ```
-]
-
---
-
-.pull-right[
-```{r, out.width="90%"}
-knitr::include_graphics("fig_ymca/stability_u5.png")
-```
-]
 
 ---
 # Interpretation
+
+.footnote[`r Citet(bib, "holt_apparent_2017")`]
 
 .pull-left[
 
@@ -392,7 +401,7 @@ knitr::include_graphics("fig_ymca/stability_u5.png")
 
 Herbivore maintains coexistence 
 
-```{r, out.width="80%"}
+```{r, out.width="70%"}
 knitr::include_graphics("fig_ymca/plant_plant_herbivore.png")
 ```
 
@@ -404,7 +413,7 @@ knitr::include_graphics("fig_ymca/plant_plant_herbivore.png")
 
 Nurse maintains coexistence
 
-```{r, out.width="80%"}
+```{r, out.width="70%"}
 knitr::include_graphics("fig_ymca/nurse_protegee_herbivore.png")
 ```
 
@@ -418,16 +427,15 @@ class: center middle
 How does indirect facilitation affect stability along the aridity gradient?
 
 ---
-class: center middle
+class: center
 # Stability
-
 
 .pull-left[
 
 ## Without indirect facilitation 
 
 ```{r, out.width="100%"}
-knitr::include_graphics("fig_ymca/bifurc_g=0.1_u=5.png")
+knitr::include_graphics("fig_ymca/protegee_only_bifurc_g=0.25.png")
 ```
 ]
 
@@ -450,8 +458,36 @@ How does indirect facilitation affect cooccurrence between the nurse and the
 protegee?
 
 ---
-class: center
+class: center middle
 # Cooccurrence 
+
+We found that indirect facilitation does not affect the cooccurrence between the
+nurse and the protegee 
+
+---
+class: center
+# Take home message
+
+## Indirect facilitation ... 
+
+allows coexistence between two species in competition
+
+modifies the transition of the protegee along the aridity gradient
+
+does not necessarily affect species cooccurrence 
+
+.footnote[`r Citet(bib, "danet_indirect_2020")`]
+---
+background-image: url("fig_ymca/merci.png")
+background-position: center
+background-size: contain
+# Thanks
+
+---
+# Appendices
+
+---
+# Cooccurrence
 
 .pull-left[
 
@@ -469,32 +505,3 @@ knitr::include_graphics("fig_ymca/clustering_u0_u10.png")
 knitr::include_graphics("fig_ymca/protegee_number_u0_u10.png")
 ```
 ]
-
----
-class: center
-# Take home message
-
-## Indirect facilitation ... 
-
-allows coexistence between two species in competition
-
---
-
-modifies the transition of the protegee along the aridity gradient: from
-catastrophic to continuous & hysteresis (less predictable)
-
---
-
-does not necessarily affect species cooccurrence 
-
-.footnote[`r Citep(bib, "danet_indirect_2020")`]
----
-background-image: url("fig_ymca/merci.png")
-background-position: center
-background-size: contain
-# Thanks
-
----
-# Appendices
-
-
