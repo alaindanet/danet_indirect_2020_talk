@@ -5,7 +5,7 @@ author:
   - "**Alain Danet**, Florian D. Schneider, Fabien Anthelme, Sonia Kéfi"
   - "Illinois State University"
   - "[https://alaindanet.github.io](https://alaindanet.github.io)"
-date: "Slides created via the R package [xaringan](https://github.com/yihui/xaringan)"
+date: "Slides created via the R package [xaringan](https://github.com/yihui/xaringan) // [Code on github](https://github.com/alaindanet/danet_indirect_2020_talk)"
 output:
   xaringan::moon_reader:
     self_contained: true
